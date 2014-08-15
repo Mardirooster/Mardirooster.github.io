@@ -1,15 +1,15 @@
 <?php
-	//retrieve our data from POST
+
 	$username = $_POST['username'];
 	$password1 = $_POST['password1'];
 	$password2 = $_POST['password2'];
 	$email = $_POST['email'];
 	 
 	if($password1 != $password2)
-	header('Location: registration.html');
+		header('Location: registration.html');
 	 
 	if(strlen($username) > 30)
-	header('Location: registration.html');
+		header('Location: registration.html');
 
 	$hash = hash('sha256', $password1);
 	 
@@ -25,7 +25,7 @@
 	$conn = mysql_connect('localhost', 'root', '');
 	mysql_select_db('login', $conn);
 	 
-	//sanitize username
+	//sanitize username to prevent injection
 	$username = mysql_real_escape_string($username);
 	 
 	$query = "INSERT INTO user ( username, password, email, salt )

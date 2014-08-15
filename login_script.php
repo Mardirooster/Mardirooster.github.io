@@ -35,6 +35,6 @@
         session_write_close();
 
 
-        header('Location: home.html');
+        header('Location: index.php');
     }
 ?>
