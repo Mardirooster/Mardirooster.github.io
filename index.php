@@ -142,7 +142,7 @@
 <p><a href="register.php" style="color: #000; text-decoration: none;">registration</a></p>
 <p><a href="upload.php" style="color: #000; text-decoration: none;">upload</a></p>
 <p><a href="http://127.0.0.1:8008/" style="color: #000; text-decoration: none;">khan academy</a></p>
-<p><a href="//placeholder" style="color: #000; text-decoration: none;">khan academy</a></p>
+<p><a href="//placeholder" style="color: #000; text-decoration: none;">rachel pi</a></p>
 
 </div>
 </div>
