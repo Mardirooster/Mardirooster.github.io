@@ -60,11 +60,11 @@
 <body>
 <FONT FACE="arial">
 <div id="container">
-<p style="font-size:60px">Network Schools</p>
+<p style="font-size:60px"><a href="index.php" style="color: #000; text-decoration: none;">Network Schools</a></p>
 <div id="main">
 <hr/>
 <span style="color: #808080;">
-<form action="search.php" method="GET">
+    <form action="search.php" method="GET">
         <table border="0">
             <tr>
                 <td>Search Terms</td>
@@ -116,12 +116,26 @@
 </span>
 <hr/>
 <div id="main_left">
-    <p>
-        Announcement database entry.
-    </p>
+<form id="form1" name="form1" method="post" action="login_script.php">
+            <table width="510" border="0" align="center">
+                <tr>
+                    <td colspan="2"><p><strong>Login Form</strong></p></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" name="username" id="username" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password" id="password" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" name="button" id="button" value="Submit" /></td>
+                </tr>
+            </table>
+        </form>
 </div>
-
-
 
 <div id="main_right">
 <div align="right">
@@ -129,15 +143,13 @@
 <div style="font-size:15px">
 
 <?php
-	if(!isset($_SESSION['sess_user_id']) || (trim($_SESSION['sess_user_id']) == '')) {
+    if(!isset($_SESSION['sess_user_id']) || (trim($_SESSION['sess_user_id']) == '')) {
         echo '<p><a href="login.php" style="color: #000; text-decoration: none;">login</a></p>';
     } else {
         echo '<p>Logged in as <i><b>'.$_SESSION['sess_username'].'</b></i></p>';
         echo '<p><a href="logout.php" style="color: #000; text-decoration: none;">logout</a></p>';
     }
 ?>
-
-
 
 <p><a href="register.php" style="color: #000; text-decoration: none;">registration</a></p>
 <p><a href="upload.php" style="color: #000; text-decoration: none;">upload</a></p>

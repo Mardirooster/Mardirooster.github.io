@@ -43,14 +43,15 @@
 
 #main_right
 {
-    float:left;
-    width:260px;
+    float:right;
+    width:200px;
     background-color:#FFFFFF;
     min-height:400px;
 }
 
 #footer
 {
+    float:bottom;
     height:40px;
     border:solid 2px #FFFFFF;
 }
@@ -60,7 +61,7 @@
 <body>
 <FONT FACE="arial">
 <div id="container">
-<p style="font-size:60px">Network Schools</p>
+<p style="font-size:60px"><a href="index.php" style="color: #000; text-decoration: none;">Network Schools</a></p>
 <div id="main">
 <hr/>
 <span style="color: #808080;">
@@ -116,12 +117,26 @@
 </span>
 <hr/>
 <div id="main_left">
-    <p>
-        Announcement database entry.
-    </p>
+<!-- Display - main page -->
+<?php
+    $conn = mysql_connect('localhost', 'root', '');
+    mysql_select_db('content', $conn);
+
+    $id = $_GET["query"];
+
+    $query = "SELECT * FROM file WHERE id='$id';";
+
+    $result = mysql_query($query);
+    $row = mysql_fetch_array($result);
+
+    echo "<object data=\"uploaded/".$row["filename"] . "\" width=\"100%\" height=\"100%\"></object>
+    <p><a href=\"uploaded/".$row["filename"] . "\"  style=\"color: #000; text-decoration: none;\"><b>".$row["name"]."</b></a></p>
+    <p>".$row["description"]."<p>";
+
+
+?>
+
 </div>
-
-
 
 <div id="main_right">
 <div align="right">
@@ -137,11 +152,13 @@
     }
 ?>
 
-
-
 <p><a href="register.php" style="color: #000; text-decoration: none;">registration</a></p>
 <p><a href="upload.php" style="color: #000; text-decoration: none;">upload</a></p>
 <p><a href="http://127.0.0.1:8008/" style="color: #000; text-decoration: none;">khan academy</a></p>
+<?php
+    echo "<p><a href=\"edit.php?content=".$_GET["query"]."\"style=\"color: #000; text-decoration: none;\">Edit</a></p>";
+    echo "<p><a href=\"delete.php?content=".$_GET["query"]."\"style=\"color: #000; text-decoration: none;\">Delete</a></p>";
+?>
 </div>
 </div>
 </div>
