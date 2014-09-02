@@ -11,15 +11,13 @@
         mysql_select_db('content', $conn);
 
         $id = mysql_real_escape_string($_GET["content"]);
-        $query = "SELECT uploaded_by FROM file WHERE id='$id'";
+        $query = "SELECT * FROM file WHERE id='$id'";
         $result = mysql_query($query);
         $row = mysql_fetch_array($result);
-        if($row["uploaded_by"] != $_SESSION['sess_user_id']){
+        if($_SESSION["sess_user_type"] != 'admin' && $row["uploaded_by"] != $_SESSION['sess_user_id']){
             header("location: content.php?query=".$id);
             exit();
         }
-
-
     }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -113,9 +111,13 @@
     if(!isset($_SESSION['sess_user_id']) || (trim($_SESSION['sess_user_id']) == '')) {
         echo '<p><a href="login.php" style="color: #000; text-decoration: none;">login</a></p>';
     } else {
-        echo '<p>Logged in as <i><b>'.$_SESSION['sess_username'].'</b></i></p>';
+        echo '<p>Logged in as <i><b><a href="login.php" style="color: #000; text-decoration: none;">'.$_SESSION['sess_username'].'</a></b></i></p>';
         echo '<p><a href="logout.php" style="color: #000; text-decoration: none;">logout</a></p>';
+        if($_SESSION['sess_user_type'] == 'admin') {
+            echo '<p><a href="management.php" style="color: #000; text-decoration: none;">management</a></p>';
+        }
     }
+
 ?>
 
 <p><a href="register.php" style="color: #000; text-decoration: none;">registration</a></p>

@@ -146,9 +146,13 @@
     if(!isset($_SESSION['sess_user_id']) || (trim($_SESSION['sess_user_id']) == '')) {
         echo '<p><a href="login.php" style="color: #000; text-decoration: none;">login</a></p>';
     } else {
-        echo '<p>Logged in as <i><b>'.$_SESSION['sess_username'].'</b></i></p>';
+        echo '<p>Logged in as <i><b><a href="login.php" style="color: #000; text-decoration: none;">'.$_SESSION['sess_username'].'</a></b></i></p>';
         echo '<p><a href="logout.php" style="color: #000; text-decoration: none;">logout</a></p>';
+        if($_SESSION['sess_user_type'] == 'admin') {
+            echo '<p><a href="management.php" style="color: #000; text-decoration: none;">management</a></p>';
+        }
     }
+
 ?>
 
 <p><a href="register.php" style="color: #000; text-decoration: none;">registration</a></p>

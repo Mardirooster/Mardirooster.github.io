@@ -1,6 +1,16 @@
 <?php
     // Start session
     session_start();
+
+    if(!isset($_SESSION['sess_user_id']) || (trim($_SESSION['sess_user_id']) == '')) {
+        header("location: login.php");
+        exit();
+    } else {
+        if($_SESSION["sess_user_type"] != 'admin'){
+            header("location: index.php");
+            exit();
+        }
+    }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,15 +53,14 @@
 
 #main_right
 {
-    float:right;
-    width:200px;
+    float:left;
+    width:260px;
     background-color:#FFFFFF;
     min-height:400px;
 }
 
 #footer
 {
-    float:bottom;
     height:40px;
     border:solid 2px #FFFFFF;
 }
@@ -65,7 +74,7 @@
 <div id="main">
 <hr/>
 <span style="color: #808080;">
-<form action="search.php" method="GET">
+    <form action="search.php" method="GET">
         <table border="0">
             <tr>
                 <td>Search Terms</td>
@@ -117,29 +126,49 @@
 </span>
 <hr/>
 <div id="main_left">
-<!-- Display - main page -->
 
+<p><strong>Accounts</strong></p>
+<table>
+    <span style="color: #808080;">
+    <tr>
+        <td>Username</td>
+        <td>User Type</td>
+    </tr>
+    </span>
 <?php
-    $conn = mysql_connect('localhost', 'root', '');
+    $conn = mysql_connect('localhost', $_SESSION['sess_username'], $_SESSION['sess_sql_pass']);
     mysql_select_db('content', $conn);
 
-    $id = $_GET["query"];
-
-    $query = "SELECT * FROM file WHERE id='$id';";
-
+    $query = "SELECT * FROM user";
     $result = mysql_query($query);
-    $row = mysql_fetch_array($result);
 
-    // display content and description - title is a direct link to file.
-    echo "<object data=\"uploaded/".$row["filename"] . "\" width=\"100%\" height=\"100%\"></object>
-    <p><a href=\"uploaded/".$row["filename"] . "\"  style=\"color: #000; text-decoration: none;\"><b>".$row["name"]."</b></a></p>
-    <p>".$row["description"]."<p>";
+    while($row = mysql_fetch_array($result)){
+        echo "<tr>
+                    <td>".$row["username"]."</td>
+                    <td>".$row["account_type"]."</td>
+                    <td>
+                        <form action=\"account.php\" method=\"POST\">
+                            <input type=\"hidden\" name=\"id\" value=\"".$row["id"]."\">
+                            <input type=\"submit\" value=\"Change Password\">
+                        </form>
+                    </td>
+                    <td>
+                        <form action=\"delete_user.php\" method=\"POST\">
+                            <input type=\"hidden\" name=\"id\" value=\"".$row["id"]."\">
+                            <input type=\"submit\" value=\"Delete Account\">
+                        </form>
+                    </td>
+                </tr>";
 
-
+    }
 ?>
 
-</div>
+</table>
+<form action="register.php">
+    <input type="submit" value="Add New Account">
+</form>
 
+</div>
 <div id="main_right">
 <div align="right">
 <p style="font-size:30px">info</p>
@@ -162,10 +191,7 @@
 <p><a href="upload.php" style="color: #000; text-decoration: none;">upload</a></p>
 <p><a href="http://127.0.0.1:8008/" style="color: #000; text-decoration: none;">khan academy</a></p>
 <p><a href="//placeholder" style="color: #000; text-decoration: none;">rachel pi</a></p>
-<?php
-    echo "<p><a href=\"edit.php?content=".$_GET["query"]."\"style=\"color: #000; text-decoration: none;\">Edit</a></p>";
-    echo "<p><a href=\"delete.php?content=".$_GET["query"]."\"style=\"color: #000; text-decoration: none;\">Delete</a></p>";
-?>
+
 </div>
 </div>
 </div>

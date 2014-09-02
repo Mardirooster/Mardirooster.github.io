@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` char(128) NOT NULL,
   `email` varchar(50) NOT NULL,
   `salt` char(128) NOT NULL,
+  CHECK (`account_type` in ('admin', 'teacher'),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 

@@ -10,7 +10,7 @@
     mysql_select_db('content', $conn);
      
     $username = mysql_real_escape_string($username);
-    $query = "SELECT id, username, password, salt
+    $query = "SELECT id, username, password, salt, account_type
     FROM user
     WHERE username = '$username';";
 
@@ -36,7 +36,9 @@
         session_regenerate_id();
         $_SESSION['sess_user_id'] = $userData['id'];
         $_SESSION['sess_username'] = $userData['username'];
-        $_SESSION['sess_sql_pass'] = '';//$userData['password'];
+        $_SESSION['sess_sql_pass'] = $userData['password'];
+        $_SESSION['sess_user_type'] = $userData['account_type'];
+        echo $userData['account_type'];
         session_write_close();
 
 
